@@ -27,9 +27,9 @@
   .site .br{color:#79c0ff} .site .nm{color:#e6edf3} .site .tld{color:#7ee787}
   .site .cur{width:.55em;height:.12em;background:#7ee787;margin-left:5px;align-self:flex-end;margin-bottom:.1em;animation:blink 1.1s steps(1) infinite}
   @keyframes blink{50%{opacity:0}}
-  .timer{background:#fff;border-radius:14px;padding:2px 18px;font-weight:900;font-size:clamp(18px,2.6vw,34px);box-shadow:0 4px 12px #0003;min-width:96px;text-align:center;font-variant-numeric:tabular-nums;color:var(--ink)}
-  .timer.low{color:var(--red);animation:pulse .6s infinite alternate}
-  @keyframes pulse{to{transform:scale(1.08)}}
+  .timer{position:absolute;left:50%;top:60px;transform:translate(-50%,-50%);background:transparent;border-radius:14px;padding:2px 18px;font-weight:900;font-size:clamp(20px,2.8vw,38px);text-shadow:0 2px 0 #0a1f3d,0 0 8px #0a1f3d99,0 0 3px #0a1f3d;min-width:96px;text-align:center;font-variant-numeric:tabular-nums;color:#fff}
+  .timer.low{color:#ff5a5a;animation:pulse .6s infinite alternate}
+  @keyframes pulse{to{transform:translate(-50%,-50%) scale(1.08)}}
   .tools{display:flex;gap:8px}
   .tools button{border:0;background:#fff;border-radius:14px;padding:8px 16px;font-size:clamp(16px,2vw,26px);cursor:pointer;box-shadow:0 3px 8px #0002;min-height:44px}
   .tools button:active{transform:scale(.94)}
@@ -60,7 +60,7 @@
   .arena{position:relative;border-radius:24px;overflow:hidden;box-shadow:0 8px 22px #0003;border:4px solid #fff;background:#9fd8ff;min-height:0}
   .arena svg{width:100%;height:100%;display:block}
   .banner{position:absolute;left:0;right:0;top:10px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:0 14px;pointer-events:none}
-  .banner .b{justify-self:start} .banner .r{justify-self:end}
+  .banner .b{justify-self:start} .banner .r{justify-self:end;grid-column:3}
   .banner span{font-weight:900;font-size:clamp(14px,2vw,28px);color:#fff;padding:4px 18px;border-radius:999px;box-shadow:0 3px 8px #0003}
   .banner .b{background:var(--blue)} .banner .r{background:var(--red)}
 
@@ -69,6 +69,8 @@
   /* characters: --c = team colour, --c2 = trim colour (set by script) */
   .kid .skin{fill:var(--skin)} .kid .kit{fill:var(--c)} .kid .shorts{fill:var(--sh)}
   .kid .trim{stroke:var(--c2)} .kid .stripe{stroke:var(--c);fill:none}
+  .spark{animation:twinkle .9s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
+  @keyframes twinkle{from{opacity:.2;transform:scale(.5)}to{opacity:1;transform:scale(1.15)}}
   .tr{animation:trunkSway 4.6s ease-in-out infinite alternate;transform-origin:0 0}
   .cn{animation:leafSway 3.1s ease-in-out infinite alternate;transform-origin:0 -26px}
   @keyframes trunkSway{from{transform:rotate(-1.2deg)}to{transform:rotate(1.2deg)}}
@@ -84,16 +86,26 @@
   #overlay{position:fixed;inset:0;background:#0b1b33cc;display:grid;place-items:center;z-index:10;padding:14px}
   #overlay.hidden{display:none}
   #overlay.result{background:transparent;place-items:end center;align-content:end;padding:8px 8px max(12px,env(safe-area-inset-bottom));pointer-events:none}
-  #overlay.result .card{pointer-events:auto;padding:10px 22px 16px;width:min(560px,96vw);background:#fffffff2;border:4px solid #ffd23f;box-shadow:0 10px 30px #0005;animation:drop .5s cubic-bezier(.3,1.5,.5,1)}
+  #overlay.result .card{pointer-events:auto;padding:6px 14px 10px;width:min(400px,92vw);background:#fffffff2;border:4px solid #ffd23f;box-shadow:0 10px 30px #0005;animation:drop .5s cubic-bezier(.3,1.5,.5,1)}
   .result h1{font-size:clamp(20px,3vw,34px)}
-  .result .stats{margin:4px 0 10px;gap:18px}
-  .result .big{font-size:clamp(17px,2vw,24px);padding:10px 26px}
+  .result .stats{margin:2px 0 8px;gap:12px;font-size:clamp(11px,1.4vw,15px)}
+  .result .big{font-size:clamp(14px,1.6vw,19px);padding:7px 20px;border-radius:14px;box-shadow:0 4px 0 #0a2f6b}
   @keyframes drop{from{transform:translateY(120%)}to{transform:none}}
-  @media (min-width:901px) and (min-aspect-ratio:1/1){ #overlay.result .card{width:min(520px,52vw)} }
+  @media (min-width:901px) and (min-aspect-ratio:1/1){ #overlay.result .card{width:min(400px,38vw)} }
   @media (max-width:900px) and (orientation:portrait){ #overlay.result{place-items:end center;align-content:end;padding-bottom:max(14px,env(safe-area-inset-bottom))} }
   @media (max-height:500px){ #overlay.result{place-items:end center;align-content:end} .result .stats{display:none} #overlay.result .card{padding:6px 14px 12px} .result .big{padding:6px 18px} }
   .card{background:#fff;border-radius:26px;padding:clamp(16px,3vw,34px);width:min(700px,96vw);max-height:96dvh;overflow:auto;box-shadow:0 20px 60px #0008;text-align:center}
   .card h1{margin:0 0 4px;font-size:clamp(24px,4vw,44px)}
+  .winBanner{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 6px;padding:3px 12px;border-radius:18px;background:radial-gradient(circle at 50% 0,#1d3f7a,#0b1b33);border:2px solid var(--neon);box-shadow:0 0 12px var(--neon),0 0 30px var(--neon),inset 0 0 16px #0009;animation:bannerGlow 1s ease-in-out infinite alternate,winPop .8s cubic-bezier(.3,1.6,.5,1) both}
+  .winBanner h1{margin:0;font-size:clamp(17px,2.2vw,26px);font-weight:900;letter-spacing:1px;background:linear-gradient(90deg,var(--neon),#fff,#ffe44d,#fff,var(--neon));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:shine 2.4s linear infinite,glow 1s ease-in-out infinite alternate}
+  .winBanner .tro{font-size:clamp(24px,4vw,44px);animation:trophyBounce .7s ease-in-out infinite alternate}
+  .winBanner .tro:last-child{animation-delay:-.35s}
+  @keyframes shine{to{background-position:-300% 0}}
+  @keyframes glow{from{filter:drop-shadow(0 0 3px var(--neon)) drop-shadow(0 0 7px var(--neon))}to{filter:drop-shadow(0 0 7px var(--neon)) drop-shadow(0 0 20px var(--neon)) drop-shadow(0 0 32px #fff9)}}
+  @keyframes bannerGlow{to{box-shadow:0 0 20px var(--neon),0 0 46px var(--neon),inset 0 0 22px #000b}}
+  @keyframes winPop{0%{transform:scale(.3) rotate(-6deg);opacity:0}70%{transform:scale(1.12) rotate(2deg)}100%{transform:scale(1);opacity:1}}
+  @keyframes trophyBounce{to{transform:translateY(-6px) rotate(8deg) scale(1.12)}}
+  @media (prefers-reduced-motion:reduce){.winBanner,.winBanner h1,.winBanner .tro{animation:none}}
   .card p.sub{margin:0 0 16px;opacity:.7}
   .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;text-align:left}
   .row label{font-weight:700;font-size:14px;display:block}
@@ -241,6 +253,24 @@
         <g id="flowers"></g>
 
         <!-- players and rope (drawn by script): bodies, then rope, then front arms -->
+        <!-- trophy stands BEHIND the winning team (drawn before the kids) -->
+        <g id="trophy" visibility="hidden">
+          <circle cx="0" cy="-36" r="52" fill="url(#sun)"/>
+          <path d="M-17 -54C-33 -54 -33 -34 -15 -31" fill="none" stroke="#d99a00" stroke-width="4" stroke-linecap="round"/>
+          <path d="M17 -54C33 -54 33 -34 15 -31" fill="none" stroke="#d99a00" stroke-width="4" stroke-linecap="round"/>
+          <rect x="-4" y="-24" width="8" height="14" fill="#e8b01a" stroke="#b57d00" stroke-width="1.200"/>
+          <rect x="-13" y="-12" width="26" height="6" rx="2" fill="#f2c230" stroke="#b57d00" stroke-width="1.200"/>
+          <rect x="-18" y="-6" width="36" height="8" rx="2.500" fill="#6b431a" stroke="#4a2c0f" stroke-width="1.200"/>
+          <path d="M-20 -58L20 -58C20 -38 11 -26 0 -24C-11 -26 -20 -38 -20 -58Z" fill="#ffd23f" stroke="#b57d00" stroke-width="1.500" stroke-linejoin="round"/>
+          <path d="M-14 -55C-14 -42 -9 -33 -3 -29C-9 -36 -11 -46 -10 -55Z" fill="#fff" opacity=".5"/>
+          <ellipse cx="0" cy="-58" rx="20" ry="4.500" fill="#ffe680" stroke="#b57d00" stroke-width="1.500"/>
+          <path d="M0 -50L2.600 -44.500L8.500 -43.800L4.200 -39.800L5.400 -34L0 -36.800L-5.400 -34L-4.200 -39.800L-8.500 -43.800L-2.600 -44.500Z" fill="#fff" opacity=".9" stroke="#e0a800" stroke-width=".8" stroke-linejoin="round"/>
+          <g fill="#fff" class="sparks">
+            <path class="spark" d="M-36 -70l2 6 6 2-6 2-2 6-2-6-6-2 6-2Z"/>
+            <path class="spark" style="animation-delay:-.4s" d="M34 -74l2 6 6 2-6 2-2 6-2-6-6-2 6-2Z"/>
+            <path class="spark" style="animation-delay:-.8s" d="M30 -26l1.500 4.500 4.500 1.500-4.500 1.500-1.500 4.500-1.500-4.500-4.500-1.500 4.500-1.500Z"/>
+          </g>
+        </g>
         <g id="bodies"></g>
         <g fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path id="ropeEdge" stroke="#6b431a" stroke-width="9"/>
@@ -332,18 +362,51 @@
       o.start(t); o.stop(t + dur + .02);
     } catch (e) {}
   }
-  const sndGood = () => { beep(660, .1); beep(880, .15, "sine", .15, .09); };
-  const sndBad  = () => beep(150, .3, "sawtooth", .12);
-  const sndTick = () => beep(520, .08, "square", .06);
-  const sndWin  = () => [523, 659, 784, 1047].forEach((f, i) => beep(f, .25, "triangle", .18, i * .15));
+  const sndGood = () => {};
+  const sndBad  = () => {};
+  const sndTick = () => {};
+  // football referee's whistle: one long, sharp blast with two close tones, a little air in it and a slight drop at the end
+  function sndWhistle() {
+    if (!soundOn) return;
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+      const t = audioCtx.currentTime, dur = 1.05, out = audioCtx.createGain();
+      out.gain.setValueAtTime(.0001, t);
+      out.gain.linearRampToValueAtTime(.4, t + .02);
+      out.gain.setValueAtTime(.4, t + dur - .18);
+      out.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      const tone = audioCtx.createGain();
+      tone.gain.value = .8;
+      const lfo = audioCtx.createOscillator(), depth = audioCtx.createGain();   // slight rattle of the whistle
+      lfo.frequency.value = 21; depth.gain.value = .2;
+      lfo.connect(depth); depth.connect(tone.gain);
+      [[3050, "sine", 1], [3420, "sine", 1], [6150, "triangle", .12]].forEach(([f, type, vol]) => {
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.type = type; g.gain.value = vol;
+        o.frequency.setValueAtTime(f, t);
+        o.frequency.setValueAtTime(f * 1.02, t + .06);
+        o.frequency.linearRampToValueAtTime(f * .97, t + dur);
+        o.connect(g); g.connect(tone); o.start(t); o.stop(t + dur + .05);
+      });
+      const nb = audioCtx.createBuffer(1, Math.floor(audioCtx.sampleRate * dur), audioCtx.sampleRate), nd = nb.getChannelData(0);
+      for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+      const air = audioCtx.createBufferSource(), af = audioCtx.createBiquadFilter(), ag = audioCtx.createGain();
+      air.buffer = nb; af.type = "bandpass"; af.frequency.value = 3300; af.Q.value = 5; ag.gain.value = .22;
+      air.connect(af); af.connect(ag); ag.connect(out);
+      tone.connect(out); out.connect(audioCtx.destination);
+      lfo.start(t); lfo.stop(t + dur + .05); air.start(t);
+    } catch (e) {}
+  }
+  const sndWin  = () => {};
 
   /* ================= children cheering (made in the browser, no audio file needed) ================= */
   let cheerOut = null, partyTimer = null, resultTimer = null;
-  function buildCheer(ctx, out) {
+  function buildCheer(ctx, out, waves = [0, 1.9, 3.9], n = 11) {
     const t0 = ctx.currentTime + .02, R = (a, b) => a + Math.random() * (b - a);
     // many young voices shouting "yaaay!" in three waves
-    [0, 1.9, 3.9].forEach(wave => {
-      for (let v = 0; v < 11; v++) {
+    waves.forEach(wave => {
+      for (let v = 0; v < n; v++) {
         const t = t0 + wave + R(0, .45), dur = R(.9, 1.6), pitch = R(330, 560);
         const o = ctx.createOscillator(), g = ctx.createGain();
         o.type = "sawtooth";
@@ -369,28 +432,115 @@
       }
     });
   }
-  function playCheer() {
-    stopCheer();
-    if (!soundOn) return;
+  // ---- natural celebration: hand-claps in a hall + crowd "aaah" + children's "yaaay" ----
+  // Pre-rendered once into a sound buffer (loudness is normalised, so it is always clearly audible), then simply played.
+  const CHEER_VOL = 1;
+  const OffCtx = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+  function unlockAudio() {
     try {
       audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
       if (audioCtx.state === "suspended") audioCtx.resume();
-      cheerOut = audioCtx.createGain();
-      cheerOut.gain.value = 4;
-      const limit = audioCtx.createDynamicsCompressor();
-      limit.threshold.value = -14; limit.knee.value = 8; limit.ratio.value = 14;
-      limit.attack.value = .003; limit.release.value = .2;
-      cheerOut.connect(limit); limit.connect(audioCtx.destination);
-      buildCheer(audioCtx, cheerOut);
     } catch (e) {}
   }
-  function stopCheer() { if (cheerOut) { cheerOut.disconnect(); cheerOut = null; } }
+  function makeReverb(ctx) {
+    const len = Math.floor(ctx.sampleRate * 1.3), buf = ctx.createBuffer(2, len, ctx.sampleRate);
+    for (let c = 0; c < 2; c++) { const d = buf.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6); }
+    const cv = ctx.createConvolver(); cv.buffer = buf; return cv;
+  }
+  function buildApplause(ctx, out, o) {
+    const len = o.len, t0 = ctx.currentTime, R = (a, b) => a + Math.random() * (b - a), sr = ctx.sampleRate;
+    const fade = Math.min(2.2, len * .4), rise = .1;
+    const clap = ctx.createBuffer(1, Math.floor(sr * .09), sr), d = clap.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (sr * .011));
+    for (let i = 1; i < d.length; i++) d[i] = .55 * d[i] + .45 * d[i - 1];            // softened, not harsh
+    const dry = ctx.createGain(), wet = ctx.createGain(), rev = makeReverb(ctx);
+    dry.gain.value = 1; wet.gain.value = .15;
+    dry.connect(out); rev.connect(wet); wet.connect(out);
+    for (let i = 0; i < o.claps; i++) {
+      const at = i < o.claps * .12 ? Math.random() * .25 : Math.pow(Math.random(), 1.25) * len;
+      const env = Math.min(1, at / rise) * (at > len - fade ? (len - at) / fade : 1);
+      const s = ctx.createBufferSource(), g = ctx.createGain(), f = ctx.createBiquadFilter();
+      s.buffer = clap; s.playbackRate.value = R(.7, 1.1);
+      f.type = "bandpass"; f.frequency.value = R(700, 2200); f.Q.value = R(.6, 1.2);
+      g.gain.value = R(.35, .9) * env;
+      s.connect(f); f.connect(g); g.connect(dry); g.connect(rev);
+      s.start(t0 + at);
+    }
+    // crowd "aaah / woooo" bed that swells with the clapping
+    const nb = ctx.createBuffer(1, sr * 2, sr), nd = nb.getChannelData(0);
+    let b0 = 0, b1 = 0, b2 = 0;
+    for (let i = 0; i < nd.length; i++) { const w = Math.random() * 2 - 1; b0 = .99765 * b0 + w * .099; b1 = .963 * b1 + w * .2965; b2 = .57 * b2 + w * 1.05; nd[i] = (b0 + b1 + b2 + w * .18) * .12; }
+    const crowd = ctx.createBufferSource(), cg = ctx.createGain();
+    crowd.buffer = nb; crowd.loop = true;
+    cg.gain.setValueAtTime(.0001, t0);
+    cg.gain.linearRampToValueAtTime(1.5, t0 + .3);
+    cg.gain.setValueAtTime(1.5, t0 + len * .5);
+    cg.gain.linearRampToValueAtTime(.0001, t0 + len);
+    [[520, 1.1, 1], [1150, 1.4, .8], [2500, 2, .35]].forEach(([fr, q, v]) => {
+      const f = ctx.createBiquadFilter(), vg = ctx.createGain();
+      f.type = "bandpass"; f.frequency.value = fr; f.Q.value = q; vg.gain.value = v;
+      crowd.connect(f); f.connect(vg); vg.connect(cg);
+    });
+    cg.connect(dry); cg.connect(rev);
+    crowd.start(t0); crowd.stop(t0 + len + .1);
+    // children shouting "yaaay"
+    const kg = ctx.createGain(), soft = ctx.createBiquadFilter();
+    kg.gain.value = 1.6; soft.type = "lowpass"; soft.frequency.value = 2800;
+    kg.connect(soft); soft.connect(dry); soft.connect(rev);
+    buildCheer(ctx, kg, o.waves, o.n);
+  }
+  async function renderCeleb(o, rms) {
+    const sr = 32000, ctx = new OffCtx(2, Math.floor(sr * (o.len + 1.5)), sr), master = ctx.createGain();
+    master.connect(ctx.destination);
+    buildApplause(ctx, master, o);
+    const buf = await ctx.startRendering();
+    let sum = 0, n = 0;
+    for (let c = 0; c < buf.numberOfChannels; c++) { const d = buf.getChannelData(c); for (let i = 0; i < d.length; i++) { sum += d[i] * d[i]; n++; } }
+    const k = rms / (Math.sqrt(sum / n) || 1);
+    for (let c = 0; c < buf.numberOfChannels; c++) { const d = buf.getChannelData(c); for (let i = 0; i < d.length; i++) d[i] = Math.tanh(d[i] * k); }   // loud but never clipping
+    return buf;
+  }
+  let bigBuf = null, smallBuf = null, celebP = null, cheerSrc = null, cheerSeq = 0;
+  function ensureCeleb() {
+    if (!celebP) celebP = Promise.all([
+      renderCeleb({ len: 8, claps: 650, waves: [0, 1.9, 3.9], n: 11 }, .17),
+      renderCeleb({ len: 2.2, claps: 110, waves: [0], n: 5 }, .12)
+    ]).then(([a, b]) => { bigBuf = a; smallBuf = b; }).catch(() => { celebP = null; });
+    return celebP;
+  }
+  function playBuf(buf, vol) {
+    unlockAudio();
+    const src = audioCtx.createBufferSource(), g = audioCtx.createGain();
+    src.buffer = buf; g.gain.value = vol;
+    src.connect(g); g.connect(audioCtx.destination); src.start();
+    return { src, g };
+  }
+  async function playCheer() {                    // big celebration when a team wins
+    stopCheer();
+    if (!soundOn) return;
+    const id = cheerSeq;
+    unlockAudio();
+    await ensureCeleb();
+    if (id !== cheerSeq || !bigBuf || !soundOn) return;
+    try { const p = playBuf(bigBuf, speaking ? CHEER_VOL * .7 : CHEER_VOL); cheerSrc = p.src; cheerOut = p.g; } catch (e) {}
+  }
+  function smallCheer() {                         // little burst of claps and "yay" for every correct answer
+    if (!soundOn || !smallBuf) return;
+    try { playBuf(smallBuf, .55); } catch (e) {}
+  }
+  function stopCheer() {
+    cheerSeq++;
+    try { if (cheerSrc) cheerSrc.stop(); } catch (e) {}
+    cheerSrc = null;
+    if (cheerOut) { try { cheerOut.disconnect(); } catch (e) {} cheerOut = null; }
+  }
   function stopCelebration() {
     stopCheer();
     stopCrowd();
     hush();
     clearInterval(partyTimer);
     clearTimeout(resultTimer);
+    trophyTeam = -1;
     document.querySelectorAll(".confetti").forEach(n => n.remove());
     overlay.classList.remove("result");
   }
@@ -412,32 +562,36 @@
     const all = voiceList();
     return all.find(v => v.name === voiceName) || all[0] || null;
   }
-  function speak(text) {
-    if (!soundOn || !synth) return;
+  let speaking = false;
+  function speak(text, loud, onStart) {
+    let fired = false;
+    const fire = () => { if (!fired) { fired = true; if (onStart) onStart(); } };   // runs exactly when the voice starts
+    if (!soundOn || !synth) { fire(); return; }
+    setTimeout(fire, 900);                                                          // safety: never wait long for a slow voice
     try {
-      synth.cancel();
+      if (synth.speaking || synth.pending) synth.cancel();
       const u = new SpeechSynthesisUtterance(text), v = chooseVoice();
       if (v) u.voice = v;
       u.lang = v ? v.lang : "en-IN";
-      u.rate = 1; u.pitch = 1; u.volume = 1;             // plain, natural speaking voice
-      u.onstart = () => { crowdLevel(.35); if (cheerOut) cheerOut.gain.value = 1.5; };   // keep the voice clear above the crowd
-      u.onend = u.onerror = () => { crowdLevel(1); if (cheerOut) cheerOut.gain.value = 4; };
+      u.rate = loud ? 1.2 : 1; u.pitch = loud ? 1.35 : 1; u.volume = 1;   // natural voice; the "Go!" is punchier and higher
+      u.onstart = () => { speaking = true; fire(); crowdLevel(.35); if (cheerOut) cheerOut.gain.setTargetAtTime(CHEER_VOL * .7, audioCtx.currentTime, .1); };   // keep the voice clear above the crowd
+      u.onend = u.onerror = () => { speaking = false; fire(); crowdLevel(1); if (cheerOut) cheerOut.gain.setTargetAtTime(CHEER_VOL, audioCtx.currentTime, .2); };
       synth.speak(u);
-    } catch (e) {}
+    } catch (e) { fire(); }
   }
-  // the only two spoken lines in the game: "Let's go!" after the countdown, and the winner announcement
-  function say(text) {
+  // the only two spoken lines in the game: "Go!" after the countdown, and the winner announcement
+  function say(text, loud, onStart) {
     const box = $("#caption");
     box.textContent = text;
     box.classList.add("show");
     clearTimeout(captionTimer);
     captionTimer = setTimeout(() => box.classList.remove("show"), 3200);
-    speak(text);
+    speak(text, loud, onStart);
   }
   function hush() {
     clearTimeout(captionTimer);
     $("#caption").classList.remove("show");
-    try { if (synth) synth.cancel(); } catch (e) {}
+    try { if (synth && (synth.speaking || synth.pending)) synth.cancel(); } catch (e) {}
     crowdLevel(1);
   }
   // "Tilak" is called "Team Tilak"; a name that already says team ("Team A") is left as it is
@@ -489,18 +643,19 @@
     out.set(full.subarray(0, sr * len));
     for (let i = 0; i < sr * fade; i++) { const k = i / (sr * fade); out[i] = out[i] * Math.sqrt(k) + full[sr * len + i] * Math.sqrt(1 - k); }
     let sum = 0; for (let i = 0; i < out.length; i++) sum += out[i] * out[i];
-    const k = .05 / (Math.sqrt(sum / out.length) || 1);            // soft level
+    const k = .12 / (Math.sqrt(sum / out.length) || 1);
     for (let i = 0; i < out.length; i++) out[i] *= k;
     return { data: out, rate: sr };
   }
-  const crowdReady = makeCrowd().catch(() => null);
+  let crowdReady = null, crowdMood = .12, crowdDuck = 1;   // mood: .12 calm ... 1 roaring
+  const ensureCrowd = () => crowdReady || (crowdReady = makeCrowd().catch(() => null));
 
   async function startCrowd() {
     stopCrowd();
     crowdOn = true;
     if (!soundOn) return;
-    if (hasRecording) { recording.volume = .5; recording.currentTime = 0; recording.play().catch(() => {}); return; }
-    const made = await crowdReady;
+    if (hasRecording) { recording.volume = .1; recording.currentTime = 0; recording.play().catch(() => {}); return; }
+    const made = await ensureCrowd();
     if (!made || !crowdOn || !soundOn || crowdSrc) return;
     try {
       audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
@@ -509,7 +664,7 @@
       crowdSrc = audioCtx.createBufferSource();
       crowdSrc.buffer = crowdBuf; crowdSrc.loop = true;
       crowdGain = audioCtx.createGain();
-      crowdGain.gain.value = CROWD_VOL;
+      crowdGain.gain.value = CROWD_VOL * crowdMood * crowdDuck;
       crowdSrc.connect(crowdGain); crowdGain.connect(audioCtx.destination);
       crowdSrc.start();
     } catch (e) {}
@@ -519,16 +674,23 @@
     recording.pause();
     if (crowdSrc) { try { crowdSrc.stop(); } catch (e) {} crowdSrc.disconnect(); crowdGain.disconnect(); crowdSrc = null; }
   }
-  function crowdLevel(k) {
-    if (hasRecording) recording.volume = Math.min(1, .5 * k);
-    if (crowdSrc) crowdGain.gain.setTargetAtTime(CROWD_VOL * k, audioCtx.currentTime, .15);
+  function applyCrowd(tc) {
+    if (hasRecording) recording.volume = Math.min(1, .05 + .6 * crowdMood * crowdDuck);
+    if (crowdSrc) crowdGain.gain.setTargetAtTime(CROWD_VOL * crowdMood * crowdDuck, audioCtx.currentTime, tc || .3);
   }
+  function crowdLevel(k) { crowdDuck = k; applyCrowd(.15); }
   function crowdSwell() {                        // the crowd roars after a good answer
     if (!crowdSrc) return;
-    const g = crowdGain.gain, t = audioCtx.currentTime;
+    const g = crowdGain.gain, t = audioCtx.currentTime, base = CROWD_VOL * crowdMood * crowdDuck;
     g.cancelScheduledValues(t);
-    g.setTargetAtTime(CROWD_VOL * 1.5, t, .25);
-    g.setTargetAtTime(CROWD_VOL, t + 1.2, .4);
+    g.setTargetAtTime(Math.min(1.6, base * 1.8 + .15), t, .12);
+    g.setTargetAtTime(base, t + 1.3, .5);
+  }
+  // the closer a team is to winning, the louder the crowd
+  function crowdFromRope() {
+    const prog = Math.min(1, Math.abs(S.pos) / Math.max(1, cfg.steps));
+    crowdMood = .12 + .88 * Math.pow(prog, 1.3);
+    applyCrowd(.5);
   }
   function crowdClaps() {                        // clap, clap, clap-clap-clap
     [0, .4, .8, 1, 1.2].forEach(w => { beep(1100, .04, "square", .07, w); beep(1700, .03, "triangle", .1, w); });
@@ -727,7 +889,7 @@
   function poseKid(k, t, shift, moving) {
     const a = anim[k.team], el = t - a.start, wave = Math.sin(t * 3.600 + k.phase);
     const heave = reduceMotion ? 0 : wave;
-    let hip = [-13 - heave * 2.500, -66 + heave * 1.200], lean = -17 - heave * 3.500, headTilt = 6, mood = "effort";
+    let shakeX = 0, shakeR = 0, hip = [-13 - heave * 2.500, -66 + heave * 1.200], lean = -17 - heave * 3.500, headTilt = 6, mood = "effort";
     let near = [31 - heave * 2, -83], far = [17 - heave * 2, -83], jumpY = 0, free = 0;
     let bf = [-37, -9], ff = [25, -9];
 
@@ -752,6 +914,7 @@
       } else if (a.type === "lose") {
         mood = "sad";
         lean = lerp(lean, 27, s); hip = mixP(hip, [-8, -48], s); headTilt = lerp(6, 16, s);
+        const sh = Math.sin(t * 4.2 + k.phase) * s; shakeR = sh * 16; shakeX = sh * 3;   // slowly shaking the head: "no..."
         near = mixP(near, [27, -43], s); far = mixP(far, [20, -45], s);
       }
     }
@@ -762,7 +925,7 @@
     drawLeg(k.nearLeg, [hip[0] + 4, hip[1] + 1], [ff[0], ff[1]], ff[1] < -9 ? -10 : -7 * (1 - free));
     set(k.hips, `M${P(spine(-12.500, -5))} L${P(spine(12.500, -5))} L${P(spine(13, 7))} Q${P(spine(0, 15))} ${P(spine(-13, 7))}Z`);
     k.torso.setAttribute("transform", `translate(${P(hip)}) rotate(${f1(lean)})`);
-    k.head.setAttribute("transform", `translate(${P(spine(3, -63))}) rotate(${f1(lean * .3 + headTilt)})`);
+    k.head.setAttribute("transform", `translate(${P(spine(3, -63).map((v, i) => i ? v : v + shakeX))}) rotate(${f1(lean * .3 + headTilt + shakeR)})`);
     if (k.mood !== mood) {
       k.mood = mood;
       set(k.mouth, MOUTH[mood][0]); k.mouth.setAttribute("fill", MOUTH[mood][1]); set(k.brows, MOUTH[mood][2]);
@@ -867,10 +1030,20 @@
   }
 
   /* ================= dustbin + trees at the far right end of the picture, whatever the screen shape ================= */
+  // the countdown sits exactly midway between the two flags on the school roof
+  function placeTimer(svg) {
+    try {
+      const m = svg.getScreenCTM(), bn = $(".banner").getBoundingClientRect();
+      if (!m) return;
+      const x = m.a * 397.5 + m.e - bn.left, y = m.d * 26 + m.f - bn.top;
+      const tm = $("#timer"); tm.style.left = f1(x) + "px"; tm.style.top = f1(y) + "px";
+    } catch (e) {}
+  }
   let lastRight = null;
   function placeScenery() {
     const svg = $("#scene"), r = svg.getBoundingClientRect();
     if (!r.width || !r.height) return;
+    placeTimer(svg);
     const aspect = r.width / r.height, visW = aspect > 1030 / 530 ? 530 * aspect : 1030;
     const right = 400 + visW / 2, binX = right - 104;
     $("#dustbin").setAttribute("transform", `translate(${f1(binX)} 326) scale(3)`);
@@ -895,6 +1068,21 @@
       birds.push({ g, wing, x: -135 - Math.abs(rank) * 20 - Math.random() * 10, base: y0 + rank * 9, speed: speed * (.95 + Math.random() * .1),
         size, ph: Math.random() * 6.28, rate: 6 + Math.random() * 3, bob: Math.random() * 6.28 });
     }
+  }
+  /* ================= trophy shaking above the winning team ================= */
+  let trophyTeam = -1, trophyStart = 0;
+  function updateTrophy(t) {
+    const el = $("#trophy");
+    if (trophyTeam < 0) { if (el.getAttribute("visibility") !== "hidden") el.setAttribute("visibility", "hidden"); return; }
+    const age = t - trophyStart, e = Math.min(age / .55, 1), pop = 1 + 2.2 * Math.pow(e - 1, 3) + 1.2 * Math.pow(e - 1, 2);   // bouncy pop-in
+    const svg = $("#scene"), pill = $("#bn" + trophyTeam).getBoundingClientRect(), m = svg.getScreenCTM();
+    if (!m) return;
+    const pt = new DOMPoint((pill.left + pill.right) / 2, pill.bottom).matrixTransform(m.inverse());
+    const mine = kids.filter(k => k.team === trophyTeam), kx = mine.reduce((a, k) => a + k.x, 0) / mine.length + shiftNow;
+    // sideways: midway between the team's name tag and the dancing kids; down: a bit below the tag
+    const sc = 1.15, shake = reduceMotion ? 0 : Math.sin(t * 14) * 7, tx = (pt.x + kx) / 2;
+    el.setAttribute("visibility", "visible");
+    el.setAttribute("transform", `translate(${f1(tx)} ${f1(pt.y + 34 + 62 * sc)}) rotate(${f1(shake)}) scale(${f1(sc * Math.max(pop, 0))})`);
   }
   function updateBirds(t, dt) {
     if (reduceMotion) return;
@@ -936,6 +1124,7 @@
     [0, 1].forEach(i => { if (!anim[i].over && anim[i].type !== "idle" && t - anim[i].start > .6) anim[i].type = "idle"; });
     drawRope(kids.map(k => poseKid(k, t, shiftNow, moving)), t);
     updateBirds(t, dt);
+    updateTrophy(t);
     waveFlags(t);
     requestAnimationFrame(frame);
   }
@@ -990,7 +1179,6 @@
     if (k === "back") t.input = t.input.slice(0, -1);
     else if (t.input.length < 4) t.input += k;
     $(".ans", el).textContent = t.input || " ";
-    beep(400 + (Number(k) || 0) * 25, .04, "sine", .05);
   }
 
   function flash(el, cls) {
@@ -1007,12 +1195,13 @@
       $(".score", el).textContent = t.score;
       S.pos += (i === 0 ? -1 : 1);
       renderRope();
+      crowdFromRope(); crowdSwell(); smallCheer();
       setAnim(i, "lunge");
       setAnim(1 - i, "stumble");
       flash(el, "good"); sndGood();
       newQ(i);
       if (Math.abs(S.pos) >= cfg.steps) endGame();
-      else crowdSwell();
+
     } else {
       flash(el, "bad"); sndBad();
       t.input = "";
@@ -1029,6 +1218,7 @@
   function startCountdown() {
     try { if (synth && soundOn) { const u = new SpeechSynthesisUtterance(" "); u.volume = 0; synth.speak(u); } } catch (e) {}
     stopCelebration();
+    unlockAudio(); ensureCeleb(); ensureCrowd();
     resetTeams();
     $("#timer").textContent = cfg.time ? fmt(cfg.time) : "∞";
     $("#timer").classList.remove("low");
@@ -1036,8 +1226,8 @@
     overlay.classList.remove("hidden");
     const tick = () => {
       overlay.innerHTML = `<div class="count">${n > 0 ? n : "GO!"}</div>`;
-      if (n === 0) say("Let's go!");
-      n > 0 ? sndTick() : beep(880, .3, "square", .1);
+      if (n === 0) setTimeout(sndWhistle, 250);              // right after "GO!" appears
+      n > 0 ? sndTick() : null;
       if (n-- < 0) { overlay.classList.add("hidden"); beginPlay(); return; }
       setTimeout(tick, n < 0 ? 600 : 800);
     };
@@ -1047,8 +1237,8 @@
   function beginPlay() {
     S.running = true;
     S.time = cfg.time;
+    crowdMood = .12; crowdDuck = 1; startCrowd();
     newQ(0); newQ(1);
-    startCrowd();
     clearInterval(S.timerId);
     if (cfg.time === 0) return;          // unlimited: only the rope decides the winner
     S.timerId = setInterval(() => {
@@ -1066,23 +1256,23 @@
     hush();
     stopCrowd();
     const w = S.pos < 0 ? 0 : S.pos > 0 ? 1 : -1;
+    // the claps start at the very moment the voice says "Team Blue wins!"
+    say(w < 0 ? "It's a draw!" : `${team(w)} wins!`, false, () => { if (w >= 0) playCheer(); });
     if (w >= 0) {
       setAnim(w, "win", true);
       setAnim(1 - w, "lose", true);
+      trophyTeam = w; trophyStart = now();
       confetti();
       let bursts = 0;
       partyTimer = setInterval(() => { confetti(); if (++bursts >= 5) clearInterval(partyTimer); }, 2400);
-      playCheer();
     }
-    sndWin();
-    say(w < 0 ? "It's a draw!" : `${team(w)} wins!`);
-    const title = w === -1 ? "It's a draw!" : `${cfg.names[w]} team wins!`;
+    const title = w === -1 ? "It's a draw!" : `${team(w)} wins!`;
     resultTimer = setTimeout(() => {
       overlay.classList.remove("hidden");
       overlay.classList.add("result");
       overlay.innerHTML = `
         <div class="card">
-          <h1>${w === -1 ? "🤝" : "🏆"} ${esc(title)}</h1>
+          ${w === -1 ? `<h1>🤝 ${esc(title)}</h1>` : `<div class="winBanner" style="--neon:${w === 0 ? "#2bd4ff" : "#ff3d6e"}"><h1>${esc(title)}</h1></div>`}
           <div class="stats">
             <span style="color:var(--blue-d)">${esc(cfg.names[0])}: ${S.teams[0].score} correct</span>
             <span style="color:var(--red-d)">${esc(cfg.names[1])}: ${S.teams[1].score} correct</span>
@@ -1198,7 +1388,7 @@
   /* ================= top bar buttons ================= */
   $("#btnMenu").onclick = showMenu;
   $("#btnSound").onclick = e => { soundOn = !soundOn; if (!soundOn) { stopCheer(); stopCrowd(); try { if (synth) synth.cancel(); } catch (x) {} }
-    else if (S.running) startCrowd(); e.currentTarget.textContent = soundOn ? "🔊" : "🔇"; };
+    e.currentTarget.textContent = soundOn ? "🔊" : "🔇"; };
   $("#btnFull").onclick = () => {
     const d = document, el = d.documentElement;
     if (!d.fullscreenElement) { (el.requestFullscreen || el.webkitRequestFullscreen || (() => {})).call(el); }
